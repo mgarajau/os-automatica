@@ -6,13 +6,20 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { validarDados } from '../src/validar.js';
 
-const PADRAO = /preencher-os\.js(?:\s+(?:"([^"]+)"|'([^']+)'|(\S+)))?/;
+// Só conta quando o script é EXECUTADO com node (não quando aparece num cat, grep ou git add).
+// Aceita aspas em volta do script e do arquivo, como o PowerShell costuma escrever.
+const PADRAO = /\bnode(?:\.exe)?["']?\s+["']?[^\s"']*preencher-os\.js["']?(?:\s+(?:"([^"]+)"|'([^']+)'|([^\s;&|]+)))?/g;
 
 export function avaliarComando(comando, cwd) {
-  const achado = PADRAO.exec(comando ?? '');
-  if (!achado) return { bloquear: false };
+  // Confere cada execução do script no comando (ex.: "node ... a.json && node ... b.json").
+  for (const achado of (comando ?? '').matchAll(PADRAO)) {
+    const resultado = avaliarArquivo(achado[1] ?? achado[2] ?? achado[3], cwd);
+    if (resultado.bloquear) return resultado;
+  }
+  return { bloquear: false };
+}
 
-  const arquivo = achado[1] ?? achado[2] ?? achado[3];
+function avaliarArquivo(arquivo, cwd) {
   if (!arquivo) {
     return { bloquear: true, mensagem: 'Informe o arquivo de dados: node scripts/preencher-os.js saida/dados.json' };
   }

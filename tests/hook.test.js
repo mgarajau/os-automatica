@@ -23,6 +23,33 @@ test('outros comandos passam direto', () => {
   assert.deepEqual(avaliarComando('npm test', projeto()), { bloquear: false });
 });
 
+test('comandos que só mencionam o script não são bloqueados', () => {
+  const pasta = projeto();
+  for (const cmd of [
+    'cat scripts/preencher-os.js',
+    'grep -n foo scripts/preencher-os.js',
+    'git add scripts/preencher-os.js README.md',
+  ]) {
+    assert.deepEqual(avaliarComando(cmd, pasta), { bloquear: false }, cmd);
+  }
+});
+
+test('forma do PowerShell com aspas é validada', () => {
+  const cmd = '& node "scripts/preencher-os.js" "saida/dados.json"';
+  assert.equal(avaliarComando(cmd, projeto(JSON.stringify(validos))).bloquear, false);
+  const { local, ...semLocal } = validos;
+  const r = avaliarComando(cmd, projeto(JSON.stringify(semLocal)));
+  assert.equal(r.bloquear, true);
+  assert.ok(r.mensagem.includes('Local'));
+});
+
+test('todas as execuções do comando são conferidas', () => {
+  const pasta = projeto(JSON.stringify(validos));
+  writeFileSync(join(pasta, 'saida', 'ruim.json'), '{}');
+  const r = avaliarComando('node scripts/preencher-os.js saida/dados.json && node scripts/preencher-os.js saida/ruim.json', pasta);
+  assert.equal(r.bloquear, true);
+});
+
 test('JSON válido passa', () => {
   assert.equal(avaliarComando(COMANDO, projeto(JSON.stringify(validos))).bloquear, false);
 });

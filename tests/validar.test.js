@@ -56,6 +56,18 @@ test('valor fora da lista mostra os permitidos', () => {
   assert.ok(r.erros.some((e) => e.includes('corretiva, preventiva, preditiva')));
 });
 
+test('texto maior que o espaço do PDF é recusado em vez de cortado', () => {
+  const r = validarDados({ ...validos(), observacoes: 'x'.repeat(451), local: 'L'.repeat(46) });
+  assert.equal(r.ok, false);
+  assert.ok(r.erros.some((e) => e.includes('Observações') && e.includes('máximo 450')));
+  assert.ok(r.erros.some((e) => e.includes('Local / setor') && e.includes('máximo 45')));
+});
+
+test('texto no limite é aceito', () => {
+  const r = validarDados({ ...validos(), descricao: 'd'.repeat(900), observacoes: 'o'.repeat(450) });
+  assert.equal(r.ok, true, r.erros.join('; '));
+});
+
 test('campo desconhecido gera erro', () => {
   const r = validarDados({ ...validos(), cor: 'azul' });
   assert.equal(r.ok, false);

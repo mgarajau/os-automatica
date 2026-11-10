@@ -44,7 +44,7 @@ saida/OS-2026-0001.pdf
 
 ## 🧪 Testes
 
-25 testes automáticos com o test runner nativo do Node (`node:test`), cobrindo validação, numeração, geração do PDF e o hook (inclusive executado como processo, do jeito que o Claude Code chama).
+30 testes automáticos com o test runner nativo do Node (`node:test`), cobrindo validação, numeração, geração do PDF e o hook (inclusive executado como processo, do jeito que o Claude Code chama).
 
 ```bash
 npm test

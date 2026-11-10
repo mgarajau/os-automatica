@@ -51,6 +51,9 @@ export function validarDados(dados) {
     if (campo.valores && !campo.valores.includes(valor)) {
       erros.push(`${campo.rotulo} inválido: "${valor}". Use: ${campo.valores.join(', ')}`);
     }
+    if (campo.maximo && valor.length > campo.maximo) {
+      erros.push(`${campo.rotulo} muito longo (${valor.length} caracteres, máximo ${campo.maximo}). Resuma o texto`);
+    }
     if (campo.nome === 'data' && !dataValida(valor)) {
       erros.push(`Data inválida: "${valor}". Use o formato DD/MM/AAAA com uma data que exista`);
     }
