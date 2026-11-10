@@ -68,6 +68,19 @@ test('texto no limite é aceito', () => {
   assert.equal(r.ok, true, r.erros.join('; '));
 });
 
+test('texto de preenchimento não conta como campo obrigatório', () => {
+  for (const vazio of ['A definir', 'a definir.', 'Não sei', 'N/A', '?', 'desconhecido', 'Não informado', '-']) {
+    const r = validarDados({ ...validos(), local: vazio });
+    assert.equal(r.ok, false, vazio);
+    assert.ok(r.erros.some((e) => e.includes('Local / setor') && e.includes('não é um valor real')), vazio);
+  }
+});
+
+test('palavras parecidas dentro de um texto real são aceitas', () => {
+  const r = validarDados({ ...validos(), local: 'Sala a definir layout – Bloco C', equipamento: 'Bomba N/A-200' });
+  assert.equal(r.ok, true, r.erros.join('; '));
+});
+
 test('campo desconhecido gera erro', () => {
   const r = validarDados({ ...validos(), cor: 'azul' });
   assert.equal(r.ok, false);
