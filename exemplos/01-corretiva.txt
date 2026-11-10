@@ -1,0 +1,3 @@
+Câmara fria 2 do bloco B alarmou alta temperatura hoje às 14h no supervisório.
+Cheguei lá e o compressor tava desarmado, contator K1 com os contatos queimados.
+Troquei o contator, rearmei e em 40 min voltou pra 4°C. TAG CF-02-CMP. Prioridade alta.

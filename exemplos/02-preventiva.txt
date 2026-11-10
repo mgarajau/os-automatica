@@ -1,0 +1,3 @@
+Preventiva trimestral na estufa 1 do Laboratório de Testes (TAG EST-01), dia 05/11/2026.
+Limpeza das resistências, conferência do sensor de temperatura com termômetro padrão
+(diferença de 0,3°C, dentro da tolerância) e reaperto dos bornes. Tudo ok, OS fechada.
