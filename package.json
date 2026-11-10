@@ -1,0 +1,20 @@
+{
+  "name": "os-automatica",
+  "version": "1.0.0",
+  "description": "Skill do Claude Code que transforma relatos de manutenção em ordens de serviço PDF",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "node --test tests/",
+    "modelo": "node scripts/criar-modelo.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+  }
+}
