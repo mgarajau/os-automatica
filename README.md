@@ -39,8 +39,28 @@ saida/OS-2026-0001.pdf
 
 - **Skill** (`.claude/skills/preencher-os/SKILL.md`): ensina o Claude a extrair só o que está no texto, converter datas ("hoje", "ontem") e perguntar pelos campos obrigatórios.
 - **Hook** (`.claude/settings.json` + `scripts/validar-os.js`): uma rede de segurança. Mesmo que a IA tente gerar a OS com dados faltando ou inválidos, o hook bloqueia o comando e devolve a lista do que falta. **A IA não pode inventar o local ou o equipamento de uma OS.**
-- **Validação** (`src/validar.js`): campos obrigatórios, data em DD/MM/AAAA (inclusive datas que não existem, como 31/02), valores permitidos e normalização ("Média" → `media`).
+- **Validação** (`src/validar.js`): campos obrigatórios (recusando textos vazios como "a definir" ou "N/A"), data em DD/MM/AAAA (inclusive datas que não existem, como 31/02), limite de caracteres para o texto caber no PDF, valores permitidos e normalização ("Média" → `media`).
 - **PDF** (`src/modelo.js`, `src/preencher.js`): o modelo do formulário é gerado por código, com campos de formulário de verdade (AcroForm). Depois de preenchido, ele é "achatado" para virar um documento final.
+
+## 📸 Na prática
+
+**1. Relato completo → OS gerada**
+
+![Claude Code gerando a OS a partir do relato](docs/print-1-gerando.png)
+
+**2. Relato incompleto → o Claude pergunta antes de gerar**
+
+![Claude perguntando equipamento, local e data](docs/print-2-perguntando.png)
+
+**3. Pedido para preencher com "a definir" → o Claude recusa**
+
+![Claude recusando gerar OS com dados vazios](docs/print-3-recusando.png)
+
+**4. Forçando a geração com dados vazios → o hook bloqueia o comando**
+
+![Hook bloqueando a geração da OS](docs/print-4-hook.png)
+
+A skill orienta a IA (prints 2 e 3). O hook garante a regra mesmo quando a IA é instruída a ignorá-la (print 4).
 
 ## 🧪 Testes
 
