@@ -13,3 +13,10 @@ export const CAMPOS = [
   { nome: 'status', rotulo: 'Status', obrigatorio: false, valores: ['aberta', 'em andamento', 'concluida'], padrao: 'aberta' },
   { nome: 'observacoes', rotulo: 'Observações', obrigatorio: false, multilinha: true },
 ];
+
+// Como os valores das listas aparecem no PDF.
+const EXIBICAO = { media: 'Média', concluida: 'Concluída', 'em andamento': 'Em andamento' };
+
+export function exibirValor(valor) {
+  return EXIBICAO[valor] ?? valor.charAt(0).toUpperCase() + valor.slice(1);
+}
