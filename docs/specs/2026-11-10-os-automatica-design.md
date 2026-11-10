@@ -2,7 +2,7 @@
 
 ## Por quê
 
-Projeto de portfólio para a vaga de estágio em IA da dti digital. A vaga pede
+Projeto de portfólio para a vaga de IA da dti digital. A vaga pede
 "automatizar trabalho repetitivo usando IA", "formulários em PDF" e "agentes,
 skills e hooks com Claude Code". O projeto mostra exatamente isso, de graça,
 usando a assinatura do Claude Code que o Matheus já tem, e conta uma história
